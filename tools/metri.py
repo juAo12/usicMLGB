@@ -42,8 +42,34 @@ def fast_auc(y_true, y_prob):
         return -1
     return float(auc) / (nfalse * (n - nfalse))
 
+
+def masked_fast_auc(y_true, y_prob):
+    """
+    y_true = [[-1, 1], [-1, 0], [0, -1]]
+    y_true = np.asarray(y_true)
+    mask = (y_true >= 0) & (y_true <= 1)
+    # print(y_true)
+    # print(mask)
+    print(y_true[mask])        [1 0 0]
+    :param y_true:
+    :param y_prob:
+    :return:
+    """
+    y_true = np.asarray(y_true)
+    print(y_true)
+    mask = (y_true >= 0) & (y_true <= 1)
+    print(mask)
+    print(y_true[mask], y_prob[mask])
+    return fast_auc(y_true[mask], y_prob[mask])
+
 if __name__ == '__main__':
-    y_true = [1, 1, 1, 0, 0, 0]
-    y_prob = [0.8, 0.6, 0.5, 0.7, 0.4, 0.3]
-    auc = fast_auc(y_true, y_prob)
-    print(auc)
+    # y_true = [1, 1, 1, 0, 0, 0]
+    # y_prob = [0.8, 0.6, 0.5, 0.7, 0.4, 0.3]
+    # auc = fast_auc(y_true, y_prob)
+    # print(auc)
+
+    # y_true = [[-1, 1], [-1, 0], [-1, 1], [0, -1], [1, -1], [1, -1]]
+    # y_prob = [0.8, 0.6, 0.5, 0.7, 0.4, 0.3]
+    # masked_fast_auc(y_true, y_prob)
+
+
